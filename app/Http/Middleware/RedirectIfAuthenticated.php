@@ -19,10 +19,6 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        if (!$request->secure()) {
-            // Nếu là HTTP, chuyển hướng sang HTTPS
-            return redirect()->secure($request->getRequestUri());
-        }
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
