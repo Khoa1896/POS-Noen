@@ -32,10 +32,10 @@ class CustomersController extends Controller
         $request->validate([
             'customer_name'  => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
-            'customer_email' => 'required|email|max:255',
-            'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
-            'address'        => 'required|string|max:500',
+            'customer_email' => 'nullable|email|max:255',
+            'city'           => 'nullable|string|max:255',
+            'country'        => 'nullable|string|max:255',
+            'address'        => 'nullable|string|max:500',
         ]);
 
         Customer::create([
@@ -73,10 +73,10 @@ class CustomersController extends Controller
         $request->validate([
             'customer_name'  => 'required|string|max:255',
             'customer_phone' => 'required|max:255',
-            'customer_email' => 'required|email|max:255',
-            'city'           => 'required|string|max:255',
-            'country'        => 'required|string|max:255',
-            'address'        => 'required|string|max:500',
+            'customer_email' => 'nullable|email|max:255',
+            'city'           => 'nullable|string|max:255',
+            'country'        => 'nullable|string|max:255',
+            'address'        => 'nullable|string|max:500',
         ]);
 
         $customer->update([
