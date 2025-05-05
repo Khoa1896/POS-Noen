@@ -80,15 +80,14 @@
                                             </span>
                                         </td>
 
-                                        <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
+                                        <td class="align-middle">{{ $item->unit_price }} đ</td>
 
                                         <td class="align-middle">
                                             {{ $item->quantity }}
                                         </td>
 
-                                        <td class="align-middle">
-                                            {{ format_currency($item->product_discount_amount) }}
-                                        </td>
+                                        <td class="align-middle">{{ $item->product_discount_amount }} đ</td>
+
 
                                         <td class="align-middle">
                                             {{ format_currency($item->product_tax_amount) }}

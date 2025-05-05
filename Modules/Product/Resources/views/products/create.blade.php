@@ -33,12 +33,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="product_code">Code <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="product_code" required value="{{ old('product_code') }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <select class="form-control" name="category_id" id="category_id" required>
@@ -74,16 +68,6 @@
                                     <div class="form-group">
                                         <label for="product_order_tax">Tax (%)</label>
                                         <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="product_tax_type">Tax Type</label>
-                                        <select class="form-control" name="product_tax_type" id="product_tax_type">
-                                            <option value="" selected>Select Tax Type</option>
-                                            <option value="1">Exclusive</option>
-                                            <option value="2">Inclusive</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -157,27 +141,34 @@
         }
     </script>
 
-    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.6.0/dist/autoNumeric.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#product_cost').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
-            });
-            $('#product_price').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
+        document.addEventListener('DOMContentLoaded', function () {
+            const productCost = new AutoNumeric('#product_cost', {
+                decimalCharacter: '{{ settings()->currency->decimal_separator }}',
+                digitGroupSeparator: '{{ settings()->currency->thousand_separator }}',
+                currencySymbol: 'đ',
+                currencySymbolPlacement: 's', // 's' = suffix (phía sau)
+                unformatOnSubmit: true,
+                modifyValueOnWheel: false
             });
 
-            $('#product-form').submit(function () {
-                var product_cost = $('#product_cost').maskMoney('unmasked')[0];
-                var product_price = $('#product_price').maskMoney('unmasked')[0];
-                $('#product_cost').val(product_cost);
-                $('#product_price').val(product_price);
+            const productPrice = new AutoNumeric('#product_price', {
+                decimalCharacter: '{{ settings()->currency->decimal_separator }}',
+                digitGroupSeparator: '{{ settings()->currency->thousand_separator }}',
+                currencySymbol: 'đ',
+                currencySymbolPlacement: 's',
+                unformatOnSubmit: true,
+                modifyValueOnWheel: false
+            });
+
+            document.getElementById('product-form').addEventListener('submit', function () {
+                productCost.unformat();  // Giá trị input sẽ chỉ là số: 44444
+                productPrice.unformat();
             });
         });
     </script>
+
+
 @endpush
 
