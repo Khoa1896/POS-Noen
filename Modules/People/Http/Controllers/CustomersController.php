@@ -49,7 +49,7 @@ class CustomersController extends Controller
 
         toast('Customer Created!', 'success');
 
-        return redirect()->route('customers.index');
+        return redirect()->back();
     }
 
 
