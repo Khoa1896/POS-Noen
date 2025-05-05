@@ -13,24 +13,15 @@ if (!function_exists('settings')) {
 if (!function_exists('format_currency')) {
     function format_currency($value, $format = true) {
         if (!$format) {
-            return $value;
+            return $value . ' đ'; // Trả về giá trị gốc và thêm chữ "đ"
         }
 
-        $settings = settings();
-        $position = $settings->default_currency_position;
-        $symbol = $settings->currency->symbol;
-        $decimal_separator = $settings->currency->decimal_separator;
-        $thousand_separator = $settings->currency->thousand_separator;
-
-        if ($position == 'prefix') {
-            $formatted_value = $symbol . number_format((float) $value, 2, $decimal_separator, $thousand_separator);
-        } else {
-            $formatted_value = number_format((float) $value, 2, $decimal_separator, $thousand_separator) . $symbol;
-        }
-
-        return $formatted_value;
+        // Định dạng số với phân cách hàng nghìn (.)
+        $formatted = number_format((float)$value, 0, ',', ',');
+        return $formatted . ' đ';
     }
 }
+
 
 if (!function_exists('make_reference_id')) {
     function make_reference_id($prefix, $number) {

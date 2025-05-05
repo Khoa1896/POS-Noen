@@ -17,14 +17,15 @@
                     <label for="customer_id">Customer <span class="text-danger">*</span></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <a href="{{ route('customers.create') }}" class="btn btn-primary">
+                            <button data-toggle="modal" data-target="#customerModal" type="button" class="btn btn-primary btn-sm">
                                 <i class="bi bi-person-plus"></i>
-                            </a>
+                            </button>
                         </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="form-control">
+                        <select wire:model.live="customer_id" id="customer_id" class="form-control select2-accessible"
+                        data-select-8-id="select2-data-customer_id">
                             <option value="" selected>Select Customer</option>
                             @foreach($customers as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                                <option value="{{ $customer->id }}" data-phone="{{ $customer->customer_phone }}">{{ $customer->customer_name }} - {{ $customer->customer_phone }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -142,6 +143,30 @@
 
     {{--Checkout Modal--}}
     @include('livewire.pos.includes.checkout-modal')
+    @include('livewire.pos.includes.customer-modal')
+    {{--End Checkout Modal--}}
 
 </div>
 
+
+@push('page_scripts')
+<script>
+    $(document).ready(function() {
+        $('#customer_id').select2({
+            matcher: function(params, data) {
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+                if (typeof data.element === 'undefined') {
+                    return null;
+                }
+                var phone = data.element.getAttribute('data-phone');
+                if (phone && phone.startsWith(params.term)) {
+                    return data;
+                }
+                return null;
+            }
+        });
+    });
+</script>
+@endpush

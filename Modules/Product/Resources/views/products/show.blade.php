@@ -40,19 +40,19 @@
                                     <td>{{ $product->category->category_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Cost</th>
-                                    <td>{{ format_currency($product->product_cost) }}</td>
+                                    <th>Cost111111</th>
+                                    <td>{{ $product->product_cost }} đ</td>
                                 </tr>
                                 <tr>
                                     <th>Price</th>
-                                    <td>{{ format_currency($product->product_price) }}</td>
+                                    <td>{{ $product->unit_price }} đ</td>
                                 </tr>
                                 <tr>
                                     <th>Quantity</th>
                                     <td>{{ $product->product_quantity . ' ' . $product->product_unit }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Stock Worth</th>
+                                    <th>Stock Worth111</th>
                                     <td>
                                         COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
                                         PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
