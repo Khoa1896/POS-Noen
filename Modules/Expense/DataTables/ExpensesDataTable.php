@@ -12,7 +12,8 @@ use Yajra\DataTables\Services\DataTable;
 class ExpensesDataTable extends DataTable
 {
 
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('amount', function ($data) {
@@ -23,11 +24,13 @@ class ExpensesDataTable extends DataTable
             });
     }
 
-    public function query(Expense $model) {
+    public function query(Expense $model)
+    {
         return $model->newQuery()->with('category');
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('expenses-table')
             ->columns($this->getColumns())
@@ -48,7 +51,8 @@ class ExpensesDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('date')
                 ->className('text-center align-middle'),
@@ -66,6 +70,9 @@ class ExpensesDataTable extends DataTable
             Column::make('details')
                 ->className('text-center align-middle'),
 
+            Column::make('payment_method')
+                ->className('text-center align-middle'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -76,7 +83,8 @@ class ExpensesDataTable extends DataTable
         ];
     }
 
-    protected function filename(): string {
+    protected function filename(): string
+    {
         return 'Expenses_' . date('YmdHis');
     }
 }

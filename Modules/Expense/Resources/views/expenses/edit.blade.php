@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <select name="category_id" id="category_id" class="form-control" required>
@@ -51,10 +51,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="amount">Amount <span class="text-danger">*</span></label>
                                         <input id="amount" type="text" class="form-control" name="amount" required value="{{ $expense->amount }}">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="payment_method">Payment method <span class="text-danger">*</span></label>
+                                        <select name="payment_method" id="payment_method" class="form-control" required>
+                                            <option value="" selected>Select Payment method</option>
+                                            <option value="transfer">Transfer</option>
+                                            <option value="cash">Cash</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -36,7 +36,8 @@ class ExpenseController extends Controller
             'payment_method' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
-            'details' => 'nullable|string|max:1000'
+            'details' => 'nullable|string|max:1000',
+            'payment_method' => 'required|string|max:255'
         ]);
 
         Expense::create([
@@ -44,7 +45,8 @@ class ExpenseController extends Controller
             'payment_method' => $request->payment_method,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
-            'details' => $request->details
+            'details' => $request->details,
+            'payment_method' => $request->payment_method,
         ]);
 
         toast('Expense Created!', 'success');
@@ -68,7 +70,8 @@ class ExpenseController extends Controller
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
-            'details' => 'nullable|string|max:1000'
+            'details' => 'nullable|string|max:1000',
+            'payment_method' => 'required|string|max:255'
         ]);
 
         $expense->update([
@@ -76,7 +79,8 @@ class ExpenseController extends Controller
             'reference' => $request->reference,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
-            'details' => $request->details
+            'details' => $request->details,
+            'payment_method' => $request->payment_method
         ]);
 
         toast('Expense Updated!', 'info');
