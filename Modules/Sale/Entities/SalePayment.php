@@ -18,7 +18,7 @@ class SalePayment extends Model
     }
 
     public function setAmountAttribute($value) {
-        $this->attributes['amount'] = $value * 100;
+        $this->attributes['amount'] = $value ;
     }
 
     public function getAmountAttribute($value) {

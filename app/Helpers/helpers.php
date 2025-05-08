@@ -16,7 +16,6 @@ if (!function_exists('format_currency')) {
             return $value . ' đ'; // Trả về giá trị gốc và thêm chữ "đ"
         }
 
-        // Định dạng số với phân cách hàng nghìn (.)
         $formatted = number_format((float)$value, 0, ',', ',');
         return $formatted . ' đ';
     }

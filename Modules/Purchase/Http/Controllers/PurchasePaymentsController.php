@@ -66,8 +66,8 @@ class PurchasePaymentsController extends Controller
             }
 
             $purchase->update([
-                'paid_amount' => ($purchase->paid_amount + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
+                'paid_amount' => ($purchase->paid_amount + $request->amount) ,
+                'due_amount' => $due_amount ,
                 'payment_status' => $payment_status
             ]);
         });
@@ -113,8 +113,8 @@ class PurchasePaymentsController extends Controller
             }
 
             $purchase->update([
-                'paid_amount' => (($purchase->paid_amount - $purchasePayment->amount) + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
+                'paid_amount' => (($purchase->paid_amount - $purchasePayment->amount) + $request->amount) ,
+                'due_amount' => $due_amount ,
                 'payment_status' => $payment_status
             ]);
 

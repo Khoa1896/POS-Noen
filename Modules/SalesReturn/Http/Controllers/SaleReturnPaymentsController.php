@@ -66,8 +66,8 @@ class SaleReturnPaymentsController extends Controller
             }
 
             $sale_return->update([
-                'paid_amount' => ($sale_return->paid_amount + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
+                'paid_amount' => ($sale_return->paid_amount + $request->amount) ,
+                'due_amount' => $due_amount ,
                 'payment_status' => $payment_status
             ]);
         });
@@ -113,8 +113,8 @@ class SaleReturnPaymentsController extends Controller
             }
 
             $sale_return->update([
-                'paid_amount' => (($sale_return->paid_amount - $saleReturnPayment->amount) + $request->amount) * 100,
-                'due_amount' => $due_amount * 100,
+                'paid_amount' => (($sale_return->paid_amount - $saleReturnPayment->amount) + $request->amount) ,
+                'due_amount' => $due_amount ,
                 'payment_status' => $payment_status
             ]);
 

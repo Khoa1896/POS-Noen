@@ -21,9 +21,10 @@ class SalesReport extends Component
     public $payment_status;
 
     protected $rules = [
-        'start_date' => 'required|date|before:end_date',
-        'end_date'   => 'required|date|after:start_date',
+        'start_date' => 'required|date|before_or_equal:end_date',
+        'end_date'   => 'required|date|after_or_equal:start_date',
     ];
+
 
     public function mount($customers) {
         $this->customers = $customers;
@@ -48,8 +49,22 @@ class SalesReport extends Component
             })
             ->orderBy('date', 'desc')->paginate(10);
 
+        $totalAmount = Sale::whereDate('date', '>=', $this->start_date)
+            ->whereDate('date', '<=', $this->end_date)
+            ->when($this->customer_id, function ($query) {
+                return $query->where('customer_id', $this->customer_id);
+            })
+            ->when($this->sale_status, function ($query) {
+                return $query->where('status', $this->sale_status);
+            })
+            ->when($this->payment_status, function ($query) {
+                return $query->where('payment_status', $this->payment_status);
+            })
+            ->sum('total_amount');  // Tính tổng của total_amount
+
         return view('livewire.reports.sales-report', [
-            'sales' => $sales
+            'sales' => $sales,
+            'totalAmount' => $totalAmount,  // Truyền tổng vào view
         ]);
     }
 

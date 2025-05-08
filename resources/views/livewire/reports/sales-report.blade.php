@@ -144,6 +144,9 @@
                         @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3 text-right">
+                        <strong>Total: </strong> {{ format_currency($totalAmount) }}
+                    </div>
                     <div @class(['mt-3' => $sales->hasPages()])>
                         {{ $sales->links() }}
                     </div>

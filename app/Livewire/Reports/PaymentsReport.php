@@ -22,12 +22,12 @@ class PaymentsReport extends Component
     public $end_date;
     public $payments;
     public $payment_method;
-
     protected $rules = [
-        'start_date' => 'required|date|before:end_date',
-        'end_date'   => 'required|date|after:start_date',
+        'start_date' => 'required|date|before_or_equal:end_date',
+        'end_date'   => 'required|date|after_or_equal:start_date',
         'payments'   => 'required|string'
     ];
+
     protected $query;
 
     public function mount() {
