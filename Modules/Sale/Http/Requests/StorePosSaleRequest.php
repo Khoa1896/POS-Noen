@@ -15,13 +15,14 @@ class StorePosSaleRequest extends FormRequest
     public function rules()
     {
         return [
+            'date' => 'required|date',
             'customer_id' => 'required|numeric',
             'tax_percentage' => 'required|integer|min:0|max:100',
             'discount_percentage' => 'required|integer|min:0|max:100',
             'shipping_amount' => 'required|numeric',
             'total_amount' => 'required|numeric',
             'paid_amount' => 'required|numeric',
-            'note' => 'nullable|string|max:1000'
+            'note' => 'nullable|string|max:1000',
         ];
     }
 
