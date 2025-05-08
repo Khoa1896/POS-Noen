@@ -41,7 +41,7 @@ class PosController extends Controller
             }
 
             $sale = Sale::create([
-                'date' => now()->format('Y-m-d'),
+                'date' => $request->date,
                 'reference' => 'PSL',
                 'customer_id' => $request->customer_id,
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
