@@ -27,7 +27,7 @@ class PurchasesReport extends Component
 
     public function mount($suppliers) {
         $this->suppliers = $suppliers;
-        $this->start_date = today()->subDays(30)->format('Y-m-d');
+        $this->start_date = today()->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
         $this->supplier_id = '';
         $this->purchase_status = '';
