@@ -12,26 +12,32 @@
                         </div>
                     </div>
                 @endif
-
-                <div class="form-group">
-                    <label for="customer_id">Customer <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button data-toggle="modal" data-target="#customerModal" type="button" class="btn btn-primary btn-sm">
-                                <i class="bi bi-person-plus"></i>
-                            </button>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <label for="customer_id">Customer <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button data-toggle="modal" data-target="#customerModal" type="button" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-person-plus"></i>
+                                        </button>
+                                    </div>
+                                    <select wire:model.live="customer_id" id="customer_id" class="form-control select2-accessible" data-select-8-id="select2-data-customer_id">
+                                        <option value="" selected>Select Customer</option>
+                                        @foreach($customers as $customer)
+                                            <option value="{{ $customer->id }}" data-phone="{{ $customer->customer_phone }}">
+                                                {{ $customer->customer_name }} - {{ $customer->customer_phone }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="form-control select2-accessible"
-                        data-select-8-id="select2-data-customer_id">
-                            <option value="" selected>Select Customer</option>
-                            @foreach($customers as $customer)
-                                <option value="{{ $customer->id }}" data-phone="{{ $customer->customer_phone }}">{{ $customer->customer_name }} - {{ $customer->customer_phone }}</option>
-                            @endforeach
-                        </select>
                     </div>
-                </div>
 
-                <div class="table-responsive">
+
+
+                    <div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr class="text-center">
