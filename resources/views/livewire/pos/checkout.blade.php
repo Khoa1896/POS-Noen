@@ -11,6 +11,7 @@
                             </button>
                         </div>
                     </div>
+                    </div>
                 @endif
                     <div class="form-group">
                         <div class="row">
