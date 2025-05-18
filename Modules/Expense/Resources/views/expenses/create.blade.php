@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <select name="category_id" id="category_id" class="form-control" required>
@@ -51,10 +51,24 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="amount">Amount <span class="text-danger">*</span></label>
                                         <input id="amount" type="text" class="form-control" name="amount" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="from-group">
+                                        <div class="form-group">
+                                            <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="payment_method" id="payment_method" required>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Credit Card">Credit Card</option>
+                                                <option value="Bank Transfer">Bank Transfer</option>
+                                                <option value="Cheque">Cheque</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

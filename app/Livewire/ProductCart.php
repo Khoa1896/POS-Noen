@@ -146,6 +146,7 @@ class ProductCart extends Component
                 'product_discount_type' => $cart_item->options->product_discount_type,
             ]
         ]);
+        $this->total_amount = $this->calculateTotal();
     }
 
     public function updatedDiscountType($value, $name) {

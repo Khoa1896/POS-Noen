@@ -144,6 +144,7 @@ class Checkout extends Component
     }
 
     public function discountModalRefresh($product_id, $row_id) {
+
         $this->updateQuantity($row_id, $product_id);
     }
 
@@ -200,6 +201,8 @@ class Checkout extends Component
     }
 
     public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount) {
+        dd('dddd day');
+
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [
             'sub_total'             => $cart_item->price * $cart_item->qty,
             'code'                  => $cart_item->options->code,

@@ -11,6 +11,7 @@
                             </button>
                         </div>
                     </div>
+                    </div>
                 @endif
                     <div class="form-group">
                         <div class="row">
@@ -60,7 +61,7 @@
                                     </td>
 
                                     <td class="align-middle">
-                                        {{ format_currency($cart_item->price) }}
+                                        {{ format_currency($cart_item->price * $cart_item->qty) }}
                                     </td>
 
                                     <td class="align-middle">
