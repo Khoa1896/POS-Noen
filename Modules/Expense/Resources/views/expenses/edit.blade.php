@@ -29,13 +29,15 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required value="{{ $expense->reference }}" readonly>
+                                        <input type="text" class="form-control" name="reference" required
+                                            value="{{ $expense->reference }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="date">Date <span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" name="date" required value="{{ $expense->getAttributes()['date'] }}">
+                                        <input type="date" class="form-control" name="date" required
+                                            value="{{ $expense->getAttributes()['date'] }}">
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +48,8 @@
                                         <label for="category_id">Category <span class="text-danger">*</span></label>
                                         <select name="category_id" id="category_id" class="form-control" required>
                                             @foreach(\Modules\Expense\Entities\ExpenseCategory::all() as $category)
-                                                <option {{ $category->id == $expense->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                                <option {{ $category->id == $expense->category_id ? 'selected' : '' }}
+                                                    value="{{ $category->id }}">{{ $category->category_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -54,14 +57,18 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="amount">Amount <span class="text-danger">*</span></label>
-                                        <input id="amount" type="text" class="form-control" name="amount" required value="{{ $expense->amount }}">
+                                        <input id="amount" type="text" class="form-control" name="amount" required
+                                            value="{{ $expense->amount }}">
+                                    </div>
+                                </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="payment_method">Payment method <span class="text-danger">*</span></label>
+                                        <label for="payment_method">Payment method <span
+                                                class="text-danger">*</span></label>
                                         <select name="payment_method" id="payment_method" class="form-control" required>
                                             <option value="" selected>Select Payment method</option>
-                                            <option value="transfer">Transfer</option>
-                                            <option value="cash">Cash</option>
+                                            <option value="Transfer">Transfer</option>
+                                            <option value="Cash">Cash</option>
                                         </select>
                                     </div>
                                 </div>
@@ -84,9 +91,9 @@
     <script>
         $(document).ready(function () {
             $('#amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
+                prefix: '{{ settings()->currency->symbol }}',
+                thousands: '{{ settings()->currency->thousand_separator }}',
+                decimal: '{{ settings()->currency->decimal_separator }}',
             });
 
             $('#amount').maskMoney('mask');
