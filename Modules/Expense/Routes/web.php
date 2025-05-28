@@ -18,4 +18,5 @@ Route::group(['middleware' => 'auth'], function () {
     //Expense
     Route::resource('expenses', 'ExpenseController')->except('show');
 
+    Route::get('expense-categories/get', 'ExpenseCategoriesController@getCategories')->name('expense-categories.get');
 });
