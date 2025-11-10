@@ -160,18 +160,45 @@
 <script>
     $(document).ready(function() {
         $('#customer_id').select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            maximumSelectionLength: 10,
             matcher: function(params, data) {
+                // Show all options if no search term
                 if ($.trim(params.term) === '') {
                     return data;
                 }
+
                 if (typeof data.element === 'undefined') {
                     return null;
                 }
-                var phone = data.element.getAttribute('data-phone');
-                if (phone && phone.startsWith(params.term)) {
+
+                var searchTerm = params.term.toLowerCase().trim();
+                var phone = (data.element.getAttribute('data-phone') || '').toLowerCase();
+                var text = (data.text || '').toLowerCase();
+
+                // Extract just the name part (before the dash)
+                var name = text.split('-')[0].trim();
+
+                // Search by phone number or customer name (flexible matching)
+                if (phone.indexOf(searchTerm) !== -1 || name.indexOf(searchTerm) !== -1) {
                     return data;
                 }
+
                 return null;
+            }
+        });
+
+        // Sync Select2 with Livewire
+        $('#customer_id').on('change', function (e) {
+            @this.set('customer_id', $(this).val());
+        });
+
+        // Preserve customer selection when Livewire updates
+        window.addEventListener('livewire:update', function() {
+            var selectedValue = @this.get('customer_id');
+            if (selectedValue && $('#customer_id').val() != selectedValue) {
+                $('#customer_id').val(selectedValue).trigger('change.select2');
             }
         });
     });

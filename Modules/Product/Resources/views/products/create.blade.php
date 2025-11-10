@@ -25,18 +25,18 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_name">Product Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_name" required value="{{ old('product_name') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="category_id">Category <span class="text-danger">*</span></label>
+                                        <label for="category_id">Category</label>
                                         <div class="input-group">
-                                            <select class="form-control" name="category_id" id="category_id" required>
-                                                <option value="" selected disabled>Select Category</option>
+                                            <select class="form-control" name="category_id" id="category_id">
+                                                <option value="">Select Category</option>
                                                 @foreach(\Modules\Product\Entities\Category::all() as $category)
                                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                                 @endforeach
@@ -52,22 +52,22 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_cost">Cost</label>
-                                        <input id="product_cost" type="text" class="form-control" name="product_cost" required value="{{ old('product_cost') }}">
+                                        <input id="product_cost" type="text" class="form-control" name="product_cost" value="{{ old('product_cost') ?? 0 }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_price">Price <span class="text-danger">*</span></label>
                                         <input id="product_price" type="text" class="form-control" name="product_price" required value="{{ old('product_price') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_order_tax">Tax (%)</label>
-                                        <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
+                                        <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') ?? 0 }}" min="0">
                                     </div>
                                 </div>
                             </div>
