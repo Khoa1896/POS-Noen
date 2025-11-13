@@ -103,7 +103,12 @@ class Checkout extends Component
     }
 
     public function removeItem($row_id) {
-        Cart::instance($this->cart_instance)->remove($row_id);
+        try {
+            Cart::instance($this->cart_instance)->remove($row_id);
+            $this->total_amount = $this->calculateTotal();
+        } catch (\Exception $e) {
+            // Item already removed or doesn't exist
+        }
     }
 
     public function updatedGlobalTax() {
@@ -115,23 +120,29 @@ class Checkout extends Component
     }
 
     public function updateQuantity($row_id, $product_id) {
+        try {
+            Cart::instance($this->cart_instance)->update($row_id, $this->quantity[$product_id]);
 
-        Cart::instance($this->cart_instance)->update($row_id, $this->quantity[$product_id]);
+            $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
-        $cart_item = Cart::instance($this->cart_instance)->get($row_id);
+            Cart::instance($this->cart_instance)->update($row_id, [
+                'options' => [
+                    'sub_total'             => $cart_item->price * $cart_item->qty,
+                    'code'                  => $cart_item->options->code,
+                    'stock'                 => $cart_item->options->stock,
+                    'unit'                  => $cart_item->options->unit,
+                    'product_tax'           => $cart_item->options->product_tax,
+                    'unit_price'            => $cart_item->options->unit_price,
+                    'product_discount'      => $cart_item->options->product_discount,
+                    'product_discount_type' => $cart_item->options->product_discount_type,
+                ]
+            ]);
 
-        Cart::instance($this->cart_instance)->update($row_id, [
-            'options' => [
-                'sub_total'             => $cart_item->price * $cart_item->qty,
-                'code'                  => $cart_item->options->code,
-                'stock'                 => $cart_item->options->stock,
-                'unit'                  => $cart_item->options->unit,
-                'product_tax'           => $cart_item->options->product_tax,
-                'unit_price'            => $cart_item->options->unit_price,
-                'product_discount'      => $cart_item->options->product_discount,
-                'product_discount_type' => $cart_item->options->product_discount_type,
-            ]
-        ]);
+            // Update total amount to refresh the grand total
+            $this->total_amount = $this->calculateTotal();
+        } catch (\Exception $e) {
+            // Item doesn't exist in cart anymore
+        }
     }
 
     public function updatedDiscountType($value, $name) {
@@ -144,29 +155,33 @@ class Checkout extends Component
     }
 
     public function setProductDiscount($row_id, $product_id) {
-        $cart_item = Cart::instance($this->cart_instance)->get($row_id);
+        try {
+            $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
-        if ($this->discount_type[$product_id] == 'fixed') {
-            Cart::instance($this->cart_instance)
-                ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $this->item_discount[$product_id]
-                ]);
+            if ($this->discount_type[$product_id] == 'fixed') {
+                Cart::instance($this->cart_instance)
+                    ->update($row_id, [
+                        'price' => ($cart_item->price + $cart_item->options->product_discount) - $this->item_discount[$product_id]
+                    ]);
 
-            $discount_amount = $this->item_discount[$product_id];
+                $discount_amount = $this->item_discount[$product_id];
 
-            $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
-        } elseif ($this->discount_type[$product_id] == 'percentage') {
-            $discount_amount = ($cart_item->price + $cart_item->options->product_discount) * ($this->item_discount[$product_id] / 100);
+                $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
+            } elseif ($this->discount_type[$product_id] == 'percentage') {
+                $discount_amount = ($cart_item->price + $cart_item->options->product_discount) * ($this->item_discount[$product_id] / 100);
 
-            Cart::instance($this->cart_instance)
-                ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $discount_amount
-                ]);
+                Cart::instance($this->cart_instance)
+                    ->update($row_id, [
+                        'price' => ($cart_item->price + $cart_item->options->product_discount) - $discount_amount
+                    ]);
 
-            $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
+                $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
+            }
+
+            session()->flash('discount_message' . $product_id, 'Discount added to the product!');
+        } catch (\Exception $e) {
+            // Item doesn't exist in cart anymore
         }
-
-        session()->flash('discount_message' . $product_id, 'Discount added to the product!');
     }
 
     public function calculate($product) {

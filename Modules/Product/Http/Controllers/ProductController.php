@@ -31,7 +31,20 @@ class ProductController extends Controller
 
 
     public function store(StoreProductRequest $request) {
-        $product = Product::create($request->except('document'));
+        $data = $request->except('document');
+
+        // Set default values for missing fields
+        $data['product_code'] = $data['product_code'] ?? 'PRD-' . time();
+        $data['product_barcode_symbology'] = $data['product_barcode_symbology'] ?? 'CODE128';
+        $data['product_unit'] = $data['product_unit'] ?? 'PC';
+        $data['product_quantity'] = $data['product_quantity'] ?? 1;
+        $data['product_stock_alert'] = $data['product_stock_alert'] ?? 10;
+        $data['product_cost'] = $data['product_cost'] ?? 0;
+        $data['product_order_tax'] = $data['product_order_tax'] ?? 0;
+        $data['product_tax_type'] = $data['product_tax_type'] ?? 1;
+        $data['category_id'] = $data['category_id'] ?: null;
+
+        $product = Product::create($data);
 
         if ($request->has('document')) {
             foreach ($request->input('document', []) as $file) {
