@@ -76,4 +76,19 @@ class ExpenseCategoriesController extends Controller
 
         return redirect()->route('expense-categories.index');
     }
+
+
+    /**
+     * Get all expense categories as JSON
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCategories()
+    {
+        $categories = ExpenseCategory::all(['id', 'category_name']);
+        
+        return response()->json([
+            'data' => $categories
+        ]);
+    }
 }
